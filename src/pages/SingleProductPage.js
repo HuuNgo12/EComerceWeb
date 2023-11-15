@@ -27,6 +27,7 @@ const SingleProductPage = () => {
     useEffect(() => {
         fetchSingleProduct(`${url}${id}`);
     }, [id]);
+
     useEffect(() => {
         if (error) {
             setTimeout(() => {
@@ -45,7 +46,7 @@ const SingleProductPage = () => {
         name,
         description,
         stock,
-        starts,
+        stars,
         reviews,
         id: sku,
         company,
@@ -63,7 +64,7 @@ const SingleProductPage = () => {
                     <ProductImages images={images} />
                     <section className="content">
                         <h2>{name}</h2>
-                        <Stars />
+                        <Stars starts={stars} reviews={reviews} />
                         <h5 className="price">{formatPrice(price)}</h5>
                         <p className="desc">{description}</p>
                         <p className="info">
@@ -79,7 +80,7 @@ const SingleProductPage = () => {
                             {company}
                         </p>
                         <hr />
-                        {stock > 0 && <AddToCart />}
+                        {stock > 0 && <AddToCart product={product} />}
                     </section>
                 </div>
             </div>
