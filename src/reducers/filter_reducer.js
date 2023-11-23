@@ -57,8 +57,18 @@ const filter_reducer = (state, action) => {
         return { ...state, filters: { ...state.filters, [name]: value } };
     }
     if (action.type === FILTER_PRODUCTS) {
-        // console.log('filtering products');
-        return { ...state };
+        const { all_products } = state;
+        const { text, category, company, color, price, shipping } =
+            state.filters;
+        let temProducts = [...all_products];
+        //filters text
+        if (text) {
+            temProducts = temProducts.filter((product) => {
+                return product.name.toLowerCase().startsWith(text);
+            });
+        }
+
+        return { ...state, filtered_products: temProducts };
     }
     if (action.type === CLEAR_FILTERS) {
         return {
