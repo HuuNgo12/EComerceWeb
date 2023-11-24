@@ -13,13 +13,13 @@ const filter_reducer = (state, action) => {
     if (action.type === LOAD_PRODUCTS) {
         let maxPrice = action.payload.map((p) => p.price);
         maxPrice = Math.max(...maxPrice);
-        console.log(maxPrice);
+        // console.log(maxPrice);
 
         return {
             ...state,
             all_products: [...action.payload],
             filtered_products: [...action.payload],
-            filters: { ...state.filtes, max_price: maxPrice, price: maxPrice },
+            filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
         };
     }
     if (action.type === SET_GRIDVIEW) {
@@ -60,12 +60,41 @@ const filter_reducer = (state, action) => {
         const { all_products } = state;
         const { text, category, company, color, price, shipping } =
             state.filters;
+        // console.log(category, color);
+        // console.log(state);
+
         let temProducts = [...all_products];
         //filters text
         if (text) {
             temProducts = temProducts.filter((product) => {
                 return product.name.toLowerCase().startsWith(text);
             });
+        }
+        //filters category
+        if (category !== 'all') {
+            temProducts = temProducts.filter(
+                (product) => product.category === category,
+            );
+        }
+        //filters company
+        if (company !== 'all') {
+            temProducts = temProducts.filter(
+                (product) => product.company === company,
+            );
+        }
+        //filters color
+        if (color !== 'all') {
+            temProducts = temProducts.filter((product) =>
+                product.colors.includes(color),
+            );
+        }
+        //filters price
+        temProducts = temProducts.filter((product) => product.price <= price);
+        //filters shipping
+        if (shipping) {
+            temProducts = temProducts.filter(
+                (product) => product.shipping === true,
+            );
         }
 
         return { ...state, filtered_products: temProducts };

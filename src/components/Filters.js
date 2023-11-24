@@ -20,6 +20,7 @@ const Filters = () => {
         clearFilters,
         all_products,
     } = useFilterContext();
+    // console.log(company);
     const categories = getUniqueValues(all_products, 'category');
     const companies = getUniqueValues(all_products, 'company');
     const colors = getUniqueValues(all_products, 'colors');
@@ -66,7 +67,7 @@ const Filters = () => {
                         <h5>Company</h5>
                         <select
                             name="company"
-                            value="company"
+                            value={company}
                             onChange={updateFilters}
                             className="company"
                         >
@@ -123,7 +124,7 @@ const Filters = () => {
                     </div>
                     {/* end colors */}
                     {/* price */}
-                    {console.log(min_price, max_price, price)}
+                    {/* {console.log(min_price, max_price, price)} */}
                     <div className="form-control">
                         <h5>price</h5>
                         <p className="price">{formatPrice(price)}</p>
